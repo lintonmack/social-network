@@ -1,4 +1,5 @@
 var User = require('../models/User')
+var usersControllers = require('../controllers/usersControllers.js')
 
 describe('Users', function () {
 
@@ -36,6 +37,21 @@ describe('Users', function () {
         var callback = jest.fn()
         User.login(user, callback)
         expect(spy).toHaveBeenCalledWith(user, callback)
+    }),
+
+    test('login static is called when we post to the login route', function(){
+        var spy = spyOn(User, 'login')
+        var req = {
+            body: {
+                emailAddress: 'hello@world.com',
+                password: 'password123' 
+            }
+        }
+
+        var res = {}
+        var callback = jest.fn()
+
+        usersControllers.login(req, res, callback)
 
     })
 })
